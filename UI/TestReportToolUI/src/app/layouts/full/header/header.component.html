@@ -1,0 +1,18 @@
+
+<!-- ============================================================== -->
+<!-- Profile - style you can find in header.scss -->
+<!-- ============================================================== -->
+<button mat-icon-button class="m-r-5" disabled> <mat-icon>notifications</mat-icon> </button>
+
+<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5"> <mat-icon>account_circle</mat-icon> </button>
+<mat-menu #profile="matMenu" class="mymegamenu">
+    <button mat-menu-item disabled>
+        <mat-icon>settings</mat-icon> Settings </button>
+    <button mat-menu-item disabled>
+        <mat-icon>account_box</mat-icon> Profile </button>
+    <button mat-menu-item disabled>
+        <mat-icon>notifications_off</mat-icon> Disable notifications </button>
+    <button mat-menu-item disabled>
+        <mat-icon>exit_to_app</mat-icon> Sign Out </button>
+</mat-menu>
+

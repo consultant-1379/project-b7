@@ -1,0 +1,105 @@
+<!-- ============================================================== -->
+<!-- Simple four boxes Row -->
+<!-- ============================================================== -->
+<div>
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="33" fxFlex="33">
+    <mat-card>
+        <mat-card-content>
+            <mat-card-title>CNA Items</mat-card-title>
+            {{ cnaRepoList.length}}
+        </mat-card-content>
+    </mat-card>
+</div>
+  <div clafxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="33" fxFlex="33">
+    <mat-card>
+        <mat-card-content>
+            <mat-card-title>CXP Items</mat-card-title>
+            {{ enmList.length}}
+        </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="25" fxFlex="33">
+      <mat-card>
+          <mat-card-content>
+              <mat-card-title>Tests Passed</mat-card-title>
+              {{ testsPassed }}
+          </mat-card-content>
+      </mat-card>
+  </div>
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="33" fxFlex="33">
+      <mat-card>
+          <mat-card-content>
+              <mat-card-title>Tests Failed</mat-card-title>
+              {{ testsFailed }}
+          </mat-card-content>
+      </mat-card>
+  </div>
+</div>
+<div>
+    <mat-card>
+        <mat-card-content>
+            <mat-card-title>Summary of Tests</mat-card-title>
+            <form [formGroup]="summaryGraphGroup">
+                <table class="summaryGraphFormTable">
+                  <tr class="row">
+                    <td class="formInput">
+                      <mat-form-field class="example-form-field">
+                      <mat-label>Date Range</mat-label>
+                      <mat-date-range-input
+                        [rangePicker]="testSummaryDateRangePicker"
+                        [comparisonStart]="summaryGraphGroup.value.startDate"
+                        [comparisonEnd]="summaryGraphGroup.value.endDate">
+                        <input matStartDate placeholder="Start date" formControlName="startDate">
+                        <input matEndDate placeholder="End date" formControlName="endDate" (dateChange)="dateChanged($event)">
+                      </mat-date-range-input>
+                      <mat-datepicker-toggle matSuffix [for]="testSummaryDateRangePicker"></mat-datepicker-toggle>
+                      <mat-date-range-picker #testSummaryDateRangePicker></mat-date-range-picker>
+                    </mat-form-field>
+                  </td>
+                  <td class="formInput">
+                      <mat-form-field>
+                      <mat-label>CNA Name</mat-label>
+                      <input matInput type="text"
+                             placeholder="Default"
+                             aria-label="CNA Repository"
+                             [matAutocomplete]="auto2"
+                             formControlName="cnaRepo">
+                      <mat-autocomplete #auto2="matAutocomplete" (optionSelected)='updateGraph()'>
+                        <mat-option *ngFor="let option of filteredCNAList | async" [value]="option.cnaName">
+                          {{option.cnaName}} -- {{option.cnaNumber}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </td>
+                  <td class="formInput">
+                      <mat-form-field>
+                        <mat-label>ENM Project Name</mat-label>
+                        <input matInput type="text"
+                               placeholder="Default"
+                               aria-label="ENM Project Name"
+                               [matAutocomplete]="auto1"
+                               formControlName="enmProject">
+                        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)='updateGraph()'>
+                          <mat-option *ngFor="let option of filteredENMProject | async" [value]="option.cxpNumber">
+                            {{option.cxpName }} -- {{option.cxpNumber}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                </table>
+
+
+
+            </form>
+            <div style="height:100%">
+              <lib-ngx-chartist class="graph" [data]="chartOpts.data" [options]="chartOpts.options" [responsiveOptions]="chartOpts.responsiveOptions" [events]="chartOpts.events" [type]="chartOpts.type ? chartOpts.type: 'Line'" [lineSmooth]="chartOpts.lineSmooth"></lib-ngx-chartist>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<!-- ============================================================== -->
+<!-- Image Card row-->
+<!-- ============================================================== -->

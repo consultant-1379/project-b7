@@ -1,0 +1,9 @@
+table.mat-table {
+  display: table;
+  width: 100%;
+}
+
+.pageHeadingText {
+   margin-left: 15px;
+   font-size: x-large;
+}

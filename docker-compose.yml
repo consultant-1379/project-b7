@@ -1,0 +1,32 @@
+version:  '3'
+services:
+  backend:
+    image: 'backend-service:latest'  
+    build: Backend/.
+    ports:
+      - "8081:8081"
+    depends_on:
+      - my-sql-service
+    links:
+      - my-sql-service:my-sql-service
+    environment:
+      - spring.datasource.url=jdbc:mysql://my-sql-service:3306/project-b7
+      - spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+      - spring.datasource.username=root
+      - spring.datasource.password=supersecret
+      
+  my-sql-service:
+    image: 'database-mysql:latest'
+    build: Scripts/.
+    environment:
+      - MYSQL_ROOT_PASSWORD=supersecret
+ 
+  frontend:
+    build: UI/TestReportToolUI/.
+    image: 'frontend-service:latest'
+    depends_on:
+      - backend
+    ports:
+      - 4200:4200
+    links:
+      - backend
